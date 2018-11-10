@@ -55,7 +55,7 @@ Function Invoke-ESXHostUpdate()
         show-MyLogger "Entering Host $ESXHostName in Maintenance Mode" -Color Green
         Set-VMHost -VMHost $ESXHostObject -State Maintenance -Confirm:$false -ErrorAction SilentlyContinue |Out-Null
         # add 10 more secs
-        show-MyLogger "Waiting 10 seconds"
+        show-MyLogger "Waiting 10 seconds" -color cyan
         Start-Sleep -Seconds 10
 
 
@@ -64,7 +64,7 @@ Function Invoke-ESXHostUpdate()
         remediate-inventory -baseline $BaselineObject -Entity $ESXHostObject -confirm:$false |Out-Null
 
         #waiting for host being fully available
-        show-MyLogger "Server is back but waiting for 30s before exiting maintenance Mode !" -Color cyan
+        show-MyLogger "Server is back online but waiting for 30s before exiting maintenance Mode !" -Color cyan
         Start-Sleep -Seconds 30
 
         #exit maintenance mode
@@ -86,19 +86,17 @@ Function Invoke-ESXHostUpdate()
         $vms=Import-Csv $csvfile
         show-MyLogger "Move back VMs on $ESXHostName"
         foreach ($vm in $vms.name) {
-            show-MyLogger "START : move $vm back to $ESXHostName" -Color Green
+            show-MyLogger "START : move $vm back to $ESXHostName"
             $a=(Get-VM -name $vm | move-vm -Destination $ESXHostName)
-            show-MyLogger "END : move $vm back to $ESXHostName" -Color Green
+            show-MyLogger "END : move $vm back to $ESXHostName"
         }
     }
 
     end {
         show-MyLogger "Disconnecting from $vcenter" -Color Cyan
         Disconnect-VIServer -Server $vcenter -ErrorAction SilentlyContinue -confirm:$false |Out-Null
+        Remove-Item -Path $csvfile -Force -ErrorAction SilentlyContinue
         [System.gc]::collect()
         show-MyLogger "Operation successfull"
     }
 }
-###############################################################################
-# End script
-###############################################################################
