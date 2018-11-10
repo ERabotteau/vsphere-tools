@@ -35,7 +35,7 @@ Function Invoke-ClusterUpdate()
 
     process{
         #get cluster hosts then call esx host update
-        $esxhostsNames=(Get-Cluster -Name vdi |Get-VMHost).name
+        $esxhostsNames=(Get-Cluster -Name $Cluster |Get-VMHost).name
         foreach ($esxhostname in $esxhostsNames) {
             Invoke-ESXHostUpdate -VCenter $VCenter -ESXHostName $esxhostname -Credential $Credential
 
