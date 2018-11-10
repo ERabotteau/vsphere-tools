@@ -8,7 +8,7 @@ Download module and ue it with powershell/powercli
 
 ### Prerequisites
 
-this module needs my other module [usefull-tools] (https://github.com/ERabotteau/Usefull-Tools)
+this module needs my other module [usefull-tools](https://github.com/ERabotteau/Usefull-Tools)
 
 
 ```
@@ -31,7 +31,7 @@ Add additional notes about how to deploy this on a live system
 
 ## License
 
-This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md) file for details
+
 
 ## Acknowledgments
 
